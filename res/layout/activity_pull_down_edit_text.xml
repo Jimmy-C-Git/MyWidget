@@ -1,0 +1,15 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:terry="http://schemas.android.com/apk/res/com.cj.mywidget"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.cj.widget.PullDownEditText
+        android:id="@+id/pullDown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        terry:LabelText="adfhlasd:"
+        terry:LabelWidth="100dp" />
+
+</LinearLayout>

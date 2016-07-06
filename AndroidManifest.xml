@@ -22,6 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.cj.mywidget.PullDownEditTextActivity"
+            android:label="@string/title_activity_pull_down_edit_text" >
+        </activity>
+        <activity
+            android:name="com.cj.mywidget.SmartListActivity"
+            android:label="@string/title_activity_smart_list" >
+        </activity>
     </application>
 
 </manifest>

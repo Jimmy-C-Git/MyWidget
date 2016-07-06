@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="EditTextWithLabel">
+        <attr name="LabelText" format="reference|string"></attr>
+        <attr name="LabelWidth" format="reference|dimension"></attr>
+        <attr name="LabelWeight" format="reference|float"></attr>
+        <attr name="background" format="reference" />
+        <attr name="textColor" format="color" />
+        <attr name="focusable" format="boolean" />
+        <attr name="layout_width" format="dimension" />
+        <attr name="frameDuration" format="integer" />
+        <attr name="pivotX" format="fraction" />
+        <attr name="orientation">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="windowSoftInputMode">
+            <flag name="stateUnspecified" value="0" />
+            <flag name="stateUnchanged" value="1" />
+            <flag name="stateHidden" value="2" />
+            <flag name="stateAlwaysHidden" value="3" />
+        </attr>
+    </declare-styleable>
+   
+
+</resources>
