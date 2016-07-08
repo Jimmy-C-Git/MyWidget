@@ -11,9 +11,10 @@
         <attr name="layout_width" format="dimension" />
         <attr name="frameDuration" format="integer" />
         <attr name="pivotX" format="fraction" />
-        <attr name="orientation">
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
+        <attr name="mode">
+            <enum name="editable" value="0" />
+            <enum name="cannoteditable" value="1" />
+            <enum name="multiselected" value="2" />
         </attr>
         <attr name="windowSoftInputMode">
             <flag name="stateUnspecified" value="0" />

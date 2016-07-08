@@ -62,11 +62,12 @@ containing a value of this type.
 <colgroup align="left" />
 <colgroup align="left" />
 <tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>horizontal</code></td><td>0</td><td></td></tr>
-<tr><td><code>vertical</code></td><td>1</td><td></td></tr>
+<tr><td><code>editable</code></td><td>0</td><td></td></tr>
+<tr><td><code>cannoteditable</code></td><td>1</td><td></td></tr>
+<tr><td><code>multiselected</code></td><td>2</td><td></td></tr>
 </table>
          */
-        public static final int orientation=0x7f010009;
+        public static final int mode=0x7f010009;
         /** <p>Must be a fractional value, which is a floating point number appended with either % or %p, such as "<code>14.5%</code>".
 The % suffix always means a percentage of the base size; the optional %p suffix provides a size relative to
 some parent container.
@@ -108,36 +109,39 @@ containing a value of this type.
         public static final int ic_pull_down_button=0x7f020004;
     }
     public static final class id {
-        public static final int btnPullDownEditText=0x7f04000d;
-        public static final int btnSmartListView=0x7f04000e;
-        public static final int button1=0x7f040007;
-        public static final int button3=0x7f040006;
-        public static final int button4=0x7f040008;
-        public static final int button5=0x7f040009;
-        public static final int button6=0x7f04000a;
-        public static final int button7=0x7f04000b;
-        public static final int button8=0x7f04000c;
-        public static final int edt=0x7f040012;
-        public static final int footer=0x7f040016;
-        public static final int header=0x7f040014;
-        public static final int horizontal=0x7f040000;
-        public static final int iv=0x7f040013;
-        public static final int lv=0x7f040015;
-        public static final int pullDown=0x7f04000f;
-        public static final int smartList=0x7f040010;
-        public static final int stateAlwaysHidden=0x7f040005;
-        public static final int stateHidden=0x7f040004;
-        public static final int stateUnchanged=0x7f040003;
-        public static final int stateUnspecified=0x7f040002;
-        public static final int tvLabel=0x7f040011;
-        public static final int vertical=0x7f040001;
+        public static final int btnPullDownEditText=0x7f04000e;
+        public static final int btnSmartListView=0x7f04000f;
+        public static final int button1=0x7f040008;
+        public static final int button3=0x7f040007;
+        public static final int button4=0x7f040009;
+        public static final int button5=0x7f04000a;
+        public static final int button6=0x7f04000b;
+        public static final int button7=0x7f04000c;
+        public static final int button8=0x7f04000d;
+        public static final int cannoteditable=0x7f040001;
+        public static final int editable=0x7f040000;
+        public static final int edt=0x7f040014;
+        public static final int footer=0x7f040018;
+        public static final int header=0x7f040016;
+        public static final int iv=0x7f040015;
+        public static final int lv=0x7f040017;
+        public static final int lvPopWindow=0x7f040012;
+        public static final int multiEdt=0x7f040010;
+        public static final int multiselected=0x7f040002;
+        public static final int smartList=0x7f040011;
+        public static final int stateAlwaysHidden=0x7f040006;
+        public static final int stateHidden=0x7f040005;
+        public static final int stateUnchanged=0x7f040004;
+        public static final int stateUnspecified=0x7f040003;
+        public static final int tvLabel=0x7f040013;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int activity_pull_down_edit_text=0x7f030001;
         public static final int activity_smart_list=0x7f030002;
-        public static final int my_pull_down_edt=0x7f030003;
-        public static final int my_smart_list_view=0x7f030004;
+        public static final int my_pop_window=0x7f030003;
+        public static final int my_pull_down_edt=0x7f030004;
+        public static final int my_smart_list_view=0x7f030005;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
@@ -187,7 +191,7 @@ containing a value of this type.
            <tr><td><code>{@link #EditTextWithLabel_focusable com.cj.mywidget:focusable}</code></td><td></td></tr>
            <tr><td><code>{@link #EditTextWithLabel_frameDuration com.cj.mywidget:frameDuration}</code></td><td></td></tr>
            <tr><td><code>{@link #EditTextWithLabel_layout_width com.cj.mywidget:layout_width}</code></td><td></td></tr>
-           <tr><td><code>{@link #EditTextWithLabel_orientation com.cj.mywidget:orientation}</code></td><td></td></tr>
+           <tr><td><code>{@link #EditTextWithLabel_mode com.cj.mywidget:mode}</code></td><td></td></tr>
            <tr><td><code>{@link #EditTextWithLabel_pivotX com.cj.mywidget:pivotX}</code></td><td></td></tr>
            <tr><td><code>{@link #EditTextWithLabel_textColor com.cj.mywidget:textColor}</code></td><td></td></tr>
            <tr><td><code>{@link #EditTextWithLabel_windowSoftInputMode com.cj.mywidget:windowSoftInputMode}</code></td><td></td></tr>
@@ -199,7 +203,7 @@ containing a value of this type.
            @see #EditTextWithLabel_focusable
            @see #EditTextWithLabel_frameDuration
            @see #EditTextWithLabel_layout_width
-           @see #EditTextWithLabel_orientation
+           @see #EditTextWithLabel_mode
            @see #EditTextWithLabel_pivotX
            @see #EditTextWithLabel_textColor
            @see #EditTextWithLabel_windowSoftInputMode
@@ -299,7 +303,7 @@ containing a value of this type.
         */
         public static final int EditTextWithLabel_layout_width = 6;
         /**
-          <p>This symbol is the offset where the {@link com.cj.mywidget.R.attr#orientation}
+          <p>This symbol is the offset where the {@link com.cj.mywidget.R.attr#mode}
           attribute's value can be found in the {@link #EditTextWithLabel} array.
 
 
@@ -309,12 +313,13 @@ containing a value of this type.
 <colgroup align="left" />
 <colgroup align="left" />
 <tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>horizontal</code></td><td>0</td><td></td></tr>
-<tr><td><code>vertical</code></td><td>1</td><td></td></tr>
+<tr><td><code>editable</code></td><td>0</td><td></td></tr>
+<tr><td><code>cannoteditable</code></td><td>1</td><td></td></tr>
+<tr><td><code>multiselected</code></td><td>2</td><td></td></tr>
 </table>
-          @attr name com.cj.mywidget:orientation
+          @attr name com.cj.mywidget:mode
         */
-        public static final int EditTextWithLabel_orientation = 9;
+        public static final int EditTextWithLabel_mode = 9;
         /**
           <p>This symbol is the offset where the {@link com.cj.mywidget.R.attr#pivotX}
           attribute's value can be found in the {@link #EditTextWithLabel} array.

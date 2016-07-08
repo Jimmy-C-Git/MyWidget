@@ -1,19 +1,21 @@
 package com.cj.mywidget;
 
-import com.cj.widget.PullDownEditText;
+import com.cj.widget.MultiEditText;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 public class PullDownEditTextActivity extends Activity {
-	PullDownEditText pullDown;
+	MultiEditText multiEdt,edit,canedit;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pull_down_edit_text);
-		pullDown=(PullDownEditText)findViewById(R.id.pullDown);
-		pullDown.init(new String[]{"1","2","3","4","5","6","7","8","9"});
+		multiEdt=(MultiEditText)findViewById(R.id.multiEdt);
+		multiEdt.init(new String[]{"1","2","3","4","5","6","7","8","9","9"});
+		edit=(MultiEditText)findViewById(R.id.editable);
+		edit.init(new String[]{"1","2","3","4","5","6","7","8","9"});
+		canedit=(MultiEditText)findViewById(R.id.cannoteditable);
+		canedit.init(new String[]{"1","2","3","4","5","6","7","8","9"});
 	}
 }

@@ -4,12 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <com.cj.widget.PullDownEditText
-        android:id="@+id/pullDown"
+    
+    <com.cj.widget.MultiEditText 
+        android:id="@+id/multiEdt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         terry:LabelText="adfhlasd:"
-        terry:LabelWidth="100dp" />
+        terry:LabelWidth="100dp"
+        terry:mode="multiselected"/>
+    <com.cj.widget.MultiEditText 
+        android:id="@+id/editable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        terry:LabelText="adfhlasd:"
+        terry:LabelWidth="100dp"
+        terry:mode="editable"/>
+    
+    <com.cj.widget.MultiEditText 
+        android:id="@+id/cannoteditable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        terry:LabelText="adfhlasd:"
+        terry:LabelWidth="100dp"
+        terry:mode="cannoteditable"/>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 
 </LinearLayout>
