@@ -108,7 +108,16 @@ public class MultiEditText extends LinearLayout{
 					
 				}
 			});
-			
+			edt.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					if(items!=null){
+						
+						showMultiSelectDialog();
+					}
+					
+				}
+			});
 			break;
 			
 		
@@ -172,6 +181,7 @@ public class MultiEditText extends LinearLayout{
 				
 			}
 		}).create();
+		
 		dialog.show();
 	}
 	 private void showPopupWindow(View view) {
