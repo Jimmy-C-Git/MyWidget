@@ -105,8 +105,7 @@ containing a value of this type.
         public static final int bkg_edt=0x7f020000;
         public static final int ic_find_next_holo_dark=0x7f020001;
         public static final int ic_find_next_holo_light=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int ic_pull_down_button=0x7f020004;
+        public static final int ic_pull_down_button=0x7f020003;
     }
     public static final class id {
         public static final int btnPullDownEditText=0x7f04000e;
