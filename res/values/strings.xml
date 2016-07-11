@@ -5,5 +5,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_pull_down_edit_text">PullDownEditTextActivity</string>
     <string name="title_activity_smart_list">SmartListActivity</string>
+    <string name="title_activity_camera">CameraActivity</string>
 
 </resources>
