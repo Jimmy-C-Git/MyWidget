@@ -51,11 +51,11 @@ public class CameraInterface {
      */  
     public void doStartPreview(SurfaceHolder holder, float previewRate){  
         Log.i(TAG, "doStartPreview...");  
-        if(isPreviewing){  
-            mCamera.stopPreview();  
-            return;  
-        }  
-        if(mCamera != null){  
+        if(isPreviewing){
+            mCamera.stopPreview();
+            return;
+        }
+        if(mCamera != null){
   
             mParams = mCamera.getParameters();  
             mParams.setPictureFormat(PixelFormat.JPEG);//设置拍照后存储的图片格式  

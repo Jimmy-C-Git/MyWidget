@@ -145,7 +145,7 @@ public class SmartListViewExFromViewGroup extends ViewGroup implements OnScrollL
 	{
 		LinearLayout ll=new LinearLayout(getContext());
 		ll.setOrientation(LinearLayout.HORIZONTAL);
-		ll.setMinimumHeight(50);
+		ll.setMinimumHeight(Tools.dip2px(getContext(), 35));
 		ll.setGravity(Gravity.CENTER_VERTICAL);
 		//ll.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		totalWidth=0;
@@ -156,7 +156,7 @@ public class SmartListViewExFromViewGroup extends ViewGroup implements OnScrollL
 			
 			if(i<mColumnWidth.size())
 			{
-				int width=Tools.str2int(mColumnWidth.get(i));
+				int width=Tools.dip2px(getContext(), Tools.str2int(mColumnWidth.get(i)));
 				tv.setLayoutParams(new LayoutParams(width==0?50:width, LayoutParams.WRAP_CONTENT));
 				totalWidth+=(width==0?50:width);
 			}else 

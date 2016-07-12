@@ -1,5 +1,7 @@
 package com.cj.mywidget;
 
+import com.cj.camera.CameraActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MainActivity extends Activity implements OnClickListener{
-	Button btnPullDownEditText,btnSmartListView;
+	Button btnPullDownEditText,btnSmartListView,btnCamera;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +24,10 @@ public class MainActivity extends Activity implements OnClickListener{
     private void initView(){
     	btnPullDownEditText=(Button)findViewById(R.id.btnPullDownEditText);
     	btnSmartListView=(Button)findViewById(R.id.btnSmartListView);
+    	btnCamera=(Button)findViewById(R.id.btnCamera);
     	btnSmartListView.setOnClickListener(this);
     	btnPullDownEditText.setOnClickListener(this);
+    	btnCamera.setOnClickListener(this);
     }
     
 	@Override
@@ -35,8 +39,13 @@ public class MainActivity extends Activity implements OnClickListener{
 			startActivity(i);
 			break;
 		case R.id.btnSmartListView:
-			 i=new Intent(this,SmartListActivity.class);
-				startActivity(i);
+			i=new Intent(this,SmartListActivity.class);
+			startActivity(i);
+			break;
+		case R.id.btnCamera:
+			i=new Intent(this,CameraActivity.class);
+			startActivity(i);
+			break;
 		}
 		
 	}

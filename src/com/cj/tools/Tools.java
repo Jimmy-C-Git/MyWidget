@@ -1,5 +1,6 @@
 package com.cj.tools;
 
+import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,20 +64,35 @@ public class Tools {
 			ans=Integer.valueOf(str);
 		} catch (Exception e) {
 			// TODO: handle exception
-		}finally{
 			return ans;
 		}
-		/*Pattern pattern = Pattern.compile("^[0-9]*");
-		Matcher matcher = pattern.matcher(str);
-		if(matcher.matches())
-		{
-			ans=Integer.valueOf(str);
-		}*/
-		
+		return ans;
+			
 	}
 	public static String getUUID()
 	{
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString().replaceAll("-", "").toLowerCase();
 	}
+	public static void dialogCheat(Dialog dialog ,boolean isShow){
+		try {
+			Field field = dialog.getClass().getSuperclass()
+					.getDeclaredField("mShowing");
+			field.setAccessible(true);
+			
+			// 将isShow设为false，表示对话框已关闭,此时dismiss的时候对话框不会消失
+			field.set(dialog, isShow);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public static int dip2px(Context context, float dipValue){              
+        final float scale = context.getResources().getDisplayMetrics().density;                   
+        return (int)(dipValue * scale + 0.5f);           
+    }       
+    
+    public static int px2dip(Context context, float pxValue){                  
+        final float scale = context.getResources().getDisplayMetrics().density;                   
+        return (int)(pxValue / scale + 0.5f);           
+    } 
 }
