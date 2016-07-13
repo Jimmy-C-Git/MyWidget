@@ -37,19 +37,19 @@
         android:text="Button" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/btnRunningTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/button6"
-        android:text="Button" />
+        android:text="btnRunningTask" />
 
     <Button
         android:id="@+id/btnCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/button7"
+        android:layout_below="@+id/btnRunningTask"
         android:text="btnCamera" />
 
     <Button

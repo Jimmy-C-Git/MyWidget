@@ -5,6 +5,8 @@ import java.util.List;
   
 
   
+
+import android.app.Activity;
 import android.graphics.Bitmap;  
 import android.graphics.BitmapFactory;  
 import android.graphics.PixelFormat;  
@@ -18,8 +20,8 @@ import android.view.SurfaceHolder;
 public class CameraInterface {  
     private static final String TAG = "yanzi";  
     private Camera mCamera;  
-    private Camera.Parameters mParams;  
-    private boolean isPreviewing = false;  
+    private Camera.Parameters mParams;
+    private boolean isPreviewing = false;
     private float mPreviwRate = -1f;  
     private static CameraInterface mCameraInterface;  
   
@@ -49,6 +51,7 @@ public class CameraInterface {
      * @param holder 
      * @param previewRate 
      */  
+ 
     public void doStartPreview(SurfaceHolder holder, float previewRate){  
         Log.i(TAG, "doStartPreview...");  
         if(isPreviewing){
@@ -56,15 +59,17 @@ public class CameraInterface {
             return;
         }
         if(mCamera != null){
-  
-            mParams = mCamera.getParameters();  
-            mParams.setPictureFormat(PixelFormat.JPEG);//设置拍照后存储的图片格式  
+        	
+            mParams = mCamera.getParameters();
+            mParams.setPictureFormat(PixelFormat.JPEG);//设置拍照后存储的图片格式
+            
             CamParaUtil.getInstance().printSupportPictureSize(mParams);  
             CamParaUtil.getInstance().printSupportPreviewSize(mParams);  
             //设置PreviewSize和PictureSize  
             Size pictureSize = CamParaUtil.getInstance().getPropPictureSize(  
                     mParams.getSupportedPictureSizes(),previewRate, 800);  
             mParams.setPictureSize(pictureSize.width, pictureSize.height);  
+            
             Size previewSize = CamParaUtil.getInstance().getPropPreviewSize(  
                     mParams.getSupportedPreviewSizes(), previewRate, 800);  
             mParams.setPreviewSize(previewSize.width, previewSize.height);  
@@ -115,7 +120,7 @@ public class CameraInterface {
      */  
     public void doTakePicture(){  
         if(isPreviewing && (mCamera != null)){  
-            mCamera.takePicture(mShutterCallback, null, mJpegPictureCallback);  
+            mCamera.takePicture(mShutterCallback, mRawCallback, mJpegPictureCallback);  
         }  
     }  
   
@@ -126,6 +131,7 @@ public class CameraInterface {
         public void onShutter() {  
             // TODO Auto-generated method stub  
             Log.i(TAG, "myShutterCallback:onShutter...");  
+            
         }  
     };  
     PictureCallback mRawCallback = new PictureCallback()   

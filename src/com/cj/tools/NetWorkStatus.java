@@ -36,8 +36,9 @@ public class NetWorkStatus extends BroadcastReceiver {
 			                if(runningAppProcessInfo.processName.startsWith("com.exatell.eed_vgm"))
 			                {
 			                	//runningAppProcessInfo.importance!=RunningAppProcessInfo.IMPORTANCE_FOREGROUND && 
-			                	boolean IsBackgroundRunning = runningAppProcessInfo.importance!=RunningAppProcessInfo.IMPORTANCE_FOREGROUND && runningAppProcessInfo.importance!=RunningAppProcessInfo.IMPORTANCE_VISIBLE;
-			                	if(!IsBackgroundRunning)
+			                	boolean isBackgroundRunning = runningAppProcessInfo.importance!=RunningAppProcessInfo.IMPORTANCE_FOREGROUND
+			                			&& runningAppProcessInfo.importance!=RunningAppProcessInfo.IMPORTANCE_VISIBLE;
+			                	if(!isBackgroundRunning)
 			                	{
 									//intent.setClass(context, NetNotAvailableActivity.class);
 			        				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);

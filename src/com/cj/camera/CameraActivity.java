@@ -6,7 +6,9 @@ import com.cj.camera.CameraInterface.CamOpenOverCallback;
 import com.cj.mywidget.R;
 
 import android.app.Activity;  
+import android.content.SharedPreferences;
 import android.graphics.Point;  
+import android.hardware.Camera;
 import android.os.Bundle;  
 import android.view.Menu;  
 import android.view.SurfaceHolder;  
@@ -19,7 +21,8 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
     private static final String TAG = "yanzi";  
     CameraSurfaceView surfaceView = null;  
     ImageButton shutterBtn;  
-    float previewRate = -1f;  
+    float previewRate = -1f; 
+    SharedPreferences mCameraShared;
     @Override  
     protected void onCreate(Bundle savedInstanceState) {  
         super.onCreate(savedInstanceState);  
@@ -35,9 +38,18 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
         initUI();  
         initViewParams();  
           
-        shutterBtn.setOnClickListener(new BtnListeners());  
-    }  
-  
+        shutterBtn.setOnClickListener(new BtnListeners()); 
+        mCameraShared=getSharedPreferences("camera",Activity.MODE_PRIVATE);
+        if(mCameraShared.getBoolean("isFirstUseCamera", true)){
+        	getSharedPreferences("camera",Activity.MODE_PRIVATE).edit().putBoolean("isFirstUseCamera",false);
+        	saveMobileInfo();
+        };
+    }
+    private void saveMobileInfo(){
+    	Camera camera=Camera.open();
+    	if(camera==null)return ;
+    	
+    }
  
     private void initUI(){  
         surfaceView = (CameraSurfaceView)findViewById(R.id.camera_surfaceview);  

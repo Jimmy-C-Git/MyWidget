@@ -28,34 +28,37 @@ public class CamParaUtil {
     public  Size getPropPreviewSize(List<Camera.Size> list, float th, int minWidth){  
         Collections.sort(list, sizeComparator);  
   
-        int i = 0;  
-        for(Size s:list){  
-            if((s.width >= minWidth) && equalRate(s, th)){  
-                Log.i(TAG, "PreviewSize:w = " + s.width + "h = " + s.height);  
-                break;  
+        int targetPosition = 0;
+        float tarRate=10;
+        
+        for(int i=0;i<list.size();i++){
+        	Size s=list.get(i);
+        	if((s.width >= minWidth)){  
+        		 float r = (float)(s.width)/(float)(s.height);
+        		 if(r<tarRate){
+        			 tarRate=r;
+        			 targetPosition=i;
+        		 }
             }  
-            i++;  
-        }  
-        if(i == list.size()){  
-            i = 0;//如果没找到，就选最小的size  
-        }  
-        return list.get(i);  
+        }
+        return list.get(list.size()-1);  
     }  
     public Size getPropPictureSize(List<Camera.Size> list, float th, int minWidth){  
-        Collections.sort(list, sizeComparator);  
-  
-        int i = 0;  
-        for(Size s:list){  
-            if((s.width >= minWidth) && equalRate(s, th)){  
-                Log.i(TAG, "PictureSize : w = " + s.width + "h = " + s.height);  
-                break;  
+        Collections.sort(list, sizeComparator);
+        int targetPosition = 0;
+        float tarRate=10;
+        
+        for(int i=0;i<list.size();i++){
+        	Size s=list.get(i);
+        	if((s.width >= minWidth)){  
+        		 float r = (float)(s.width)/(float)(s.height);
+        		 if(r<tarRate){
+        			 tarRate=r;
+        			 targetPosition=i;
+        		 }
             }  
-            i++;  
-        }  
-        if(i == list.size()){  
-            i = 0;//如果没找到，就选最小的size  
-        }  
-        return list.get(i);  
+        }
+        return list.get(list.size()-1);  
     }  
   
     public boolean equalRate(Size s, float rate){  
