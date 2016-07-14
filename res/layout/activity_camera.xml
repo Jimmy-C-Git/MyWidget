@@ -4,13 +4,14 @@
     android:layout_height="match_parent"  
     tools:context=".CameraActivity" >  
     <FrameLayout  
-        android:layout_width="wrap_content"  
-        android:layout_height="wrap_content" >  
+        android:layout_width="match_parent"  
+        android:layout_height="match_parent" >  
   
         <com.cj.camera.CameraSurfaceView  
             android:id="@+id/camera_surfaceview"  
             android:layout_width="0dip"  
-            android:layout_height="0dip" />  
+            android:layout_height="0dip"
+            android:layout_gravity="center" />  
     </FrameLayout>  
   
     <ImageButton  

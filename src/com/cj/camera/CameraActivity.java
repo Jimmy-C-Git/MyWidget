@@ -9,7 +9,9 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Point;  
 import android.hardware.Camera;
+import android.hardware.Camera.Parameters;
 import android.os.Bundle;  
+import android.os.Handler;
 import android.view.Menu;  
 import android.view.SurfaceHolder;  
 import android.view.View;  
@@ -22,33 +24,30 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
     CameraSurfaceView surfaceView = null;  
     ImageButton shutterBtn;  
     float previewRate = -1f; 
-    SharedPreferences mCameraShared;
+    
     @Override  
     protected void onCreate(Bundle savedInstanceState) {  
         super.onCreate(savedInstanceState);  
-        Thread openThread = new Thread(){  
-            @Override  
-            public void run() {  
-                // TODO Auto-generated method stub  
-                CameraInterface.getInstance().doOpenCamera(CameraActivity.this);  
-            }  
-        };  
-        openThread.start();  
+        
         setContentView(R.layout.activity_camera);  
         initUI();  
         initViewParams();  
           
         shutterBtn.setOnClickListener(new BtnListeners()); 
-        mCameraShared=getSharedPreferences("camera",Activity.MODE_PRIVATE);
-        if(mCameraShared.getBoolean("isFirstUseCamera", true)){
-        	getSharedPreferences("camera",Activity.MODE_PRIVATE).edit().putBoolean("isFirstUseCamera",false);
-        	saveMobileInfo();
-        };
+      
     }
-    private void saveMobileInfo(){
-    	Camera camera=Camera.open();
-    	if(camera==null)return ;
-    	
+    @Override
+    protected void onResume() {
+    	// TODO Auto-generated method stub
+    	super.onResume();
+    	 Thread openThread = new Thread(){  
+             @Override  
+             public void run() {  
+                 // TODO Auto-generated method stub  
+                 CameraInterface.getInstance(CameraActivity.this).doOpenCamera(CameraActivity.this);  
+             }  
+         };  
+         openThread.start(); 
     }
  
     private void initUI(){  
@@ -70,12 +69,23 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
         shutterBtn.setLayoutParams(p2);   
   
     }  
-  
+    Handler handler=new Handler();
+    
     @Override  
-    public void cameraHasOpened() {  
-        // TODO Auto-generated method stub  
+    public void cameraHasOpened(final int previewWidth,final int previewHeight) {  
         SurfaceHolder holder = surfaceView.getSurfaceHolder();  
-        CameraInterface.getInstance().doStartPreview(holder, previewRate);  
+        CameraInterface.getInstance(this).doStartPreview(holder, previewRate);
+        
+        handler.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				LayoutParams params = surfaceView.getLayoutParams();
+		        params.width =previewHeight ;  
+		        params.height = previewWidth;  
+		        surfaceView.setLayoutParams(params);
+			}
+		});
     }  
     private class BtnListeners implements OnClickListener{  
   
@@ -84,7 +94,7 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
             // TODO Auto-generated method stub  
             switch(v.getId()){  
             case R.id.btn_shutter:  
-                CameraInterface.getInstance().doTakePicture();  
+                CameraInterface.getInstance(CameraActivity.this).doTakePicture();  
                 break;  
             default:break;  
             }  

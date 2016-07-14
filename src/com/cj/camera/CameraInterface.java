@@ -6,16 +6,26 @@ import java.util.List;
 
   
 
+
+
+
+
+
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;  
 import android.graphics.BitmapFactory;  
 import android.graphics.PixelFormat;  
 import android.hardware.Camera;  
+import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;  
 import android.hardware.Camera.ShutterCallback;  
 import android.hardware.Camera.Size;  
 import android.util.Log;  
 import android.view.SurfaceHolder;  
+import android.view.SurfaceView;
+import android.view.ViewGroup.LayoutParams;
   
 public class CameraInterface {  
     private static final String TAG = "yanzi";  
@@ -24,18 +34,21 @@ public class CameraInterface {
     private boolean isPreviewing = false;
     private float mPreviwRate = -1f;  
     private static CameraInterface mCameraInterface;  
-  
+    private Context mContext;
+    SharedPreferences mCameraShared;
+    
     public interface CamOpenOverCallback{  
-        public void cameraHasOpened();  
+        public void cameraHasOpened(int previewWidth,int previewHeight);  
     }  
   
     private CameraInterface(){  
   
     }  
-    public static synchronized CameraInterface getInstance(){  
+    public static synchronized CameraInterface getInstance(Context context){  
         if(mCameraInterface == null){  
             mCameraInterface = new CameraInterface();  
         }  
+        mCameraInterface.mContext=context;
         return mCameraInterface;  
     }  
     /**打开Camera 
@@ -45,35 +58,53 @@ public class CameraInterface {
         Log.i(TAG, "Camera open....");  
         mCamera = Camera.open();  
         Log.i(TAG, "Camera open over....");  
-        callback.cameraHasOpened();  
+        initCameraParams();
+        Size size=getPreviewSizeFromShare();
+        callback.cameraHasOpened(size.width,size.height);  
     }  
     /**开启预览 
      * @param holder 
      * @param previewRate 
      */  
- 
-    public void doStartPreview(SurfaceHolder holder, float previewRate){  
-        Log.i(TAG, "doStartPreview...");  
-        if(isPreviewing){
-            mCamera.stopPreview();
-            return;
-        }
-        if(mCamera != null){
+    private void saveMobileInfo(){
+    	 Size maxPictureSize = CamParaUtil.getInstance().getMaxPictureSize(  
+                 mParams.getSupportedPictureSizes());
+    	 mCameraShared.edit().putInt("PictureSizeWidth", maxPictureSize.width).commit();
+    	 mCameraShared.edit().putInt("PictureSizeHeight", maxPictureSize.height).commit();
+    	 Size preViewSize= CamParaUtil.getInstance().getPropPreviewSize(
+    			 mParams.getSupportedPreviewSizes(), maxPictureSize.height/maxPictureSize.width,500);
+    	 mCameraShared.edit().putInt("PreviewSizeWidth", preViewSize.width).commit();
+    	 mCameraShared.edit().putInt("PreviewSizeHeight", preViewSize.height).commit();
+    }
+    private Size getPictureSizeFromShare(){
+    	if(mCameraShared==null)
+    		mCameraShared=mContext.getSharedPreferences("camera",Activity.MODE_PRIVATE);
+    	return mCamera.new Size(mCameraShared.getInt("PictureSizeWidth", 0),mCameraShared.getInt("PictureSizeHeight", 0));
+    }
+    private Size getPreviewSizeFromShare(){
+    	if(mCameraShared==null)
+    		mCameraShared=mContext.getSharedPreferences("camera",Activity.MODE_PRIVATE);
+    	return mCamera.new Size(mCameraShared.getInt("PreviewSizeWidth", 0),mCameraShared.getInt("PreviewSizeHeight", 0));
+    }
+    private void initCameraParams(){
+    	if(mCamera != null){
+        	mParams = mCamera.getParameters();
+        	mCameraShared=mContext.getSharedPreferences("camera",Activity.MODE_PRIVATE);
+        	if(mCameraShared.getBoolean("isFirstUseCamera", true)){
+        		mCameraShared.edit().putBoolean("isFirstUseCamera",false).commit();
+        		saveMobileInfo();
+        	};
         	
-            mParams = mCamera.getParameters();
             mParams.setPictureFormat(PixelFormat.JPEG);//设置拍照后存储的图片格式
             
-            CamParaUtil.getInstance().printSupportPictureSize(mParams);  
-            CamParaUtil.getInstance().printSupportPreviewSize(mParams);  
-            //设置PreviewSize和PictureSize  
-            Size pictureSize = CamParaUtil.getInstance().getPropPictureSize(  
-                    mParams.getSupportedPictureSizes(),previewRate, 800);  
+            CamParaUtil.getInstance().printSupportPictureSize(mParams);
+            CamParaUtil.getInstance().printSupportPreviewSize(mParams);
+            //设置PreviewSize和PictureSize
+            Size pictureSize = getPictureSizeFromShare(); 
             mParams.setPictureSize(pictureSize.width, pictureSize.height);  
             
-            Size previewSize = CamParaUtil.getInstance().getPropPreviewSize(  
-                    mParams.getSupportedPreviewSizes(), previewRate, 800);  
+            Size previewSize = getPreviewSizeFromShare();  
             mParams.setPreviewSize(previewSize.width, previewSize.height);  
-  
             mCamera.setDisplayOrientation(90);  
   
             CamParaUtil.getInstance().printSupportFocusMode(mParams);  
@@ -82,7 +113,15 @@ public class CameraInterface {
                 mParams.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);  
             }  
             mCamera.setParameters(mParams);   
-  
+    	}
+    }
+    public void doStartPreview(SurfaceHolder holder, float previewRate){  
+        Log.i(TAG, "doStartPreview...");  
+        if(isPreviewing){
+            mCamera.stopPreview();
+            return;
+        }
+        if(mCamera != null){
             try {  
                 mCamera.setPreviewDisplay(holder);  
                 mCamera.startPreview();//开启预览  

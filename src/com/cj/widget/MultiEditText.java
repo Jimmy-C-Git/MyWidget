@@ -30,6 +30,7 @@ public class MultiEditText extends LinearLayout{
 	public static final int EDITABLE=0;
 	public static final int CANNOTEDITABLE=1;
 	public static final int MULTISELECT=2;
+	public static final int WITHOUTBUTTON=3;
 	private TextView tvLabel;
 	private EditText edt;
 	private ImageView iv;
@@ -37,7 +38,7 @@ public class MultiEditText extends LinearLayout{
 	private int selectedItem;
 	private PopupWindow mPopupWindow;
 	private LinearLayout llEdt;
-	private int  mode=0;
+	private int  mode=EDITABLE;
 	//editable 可编辑,可下拉选择
 	//cannoteditable 只可下拉选择
 	private String multiSelectAns;
@@ -119,8 +120,9 @@ public class MultiEditText extends LinearLayout{
 				}
 			});
 			break;
-			
-		
+		case WITHOUTBUTTON:
+			iv.setVisibility(View.GONE);
+			break;
 		}
 	}
 	private void setMyAttrs(AttributeSet attrs){

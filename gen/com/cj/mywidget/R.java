@@ -65,6 +65,7 @@ containing a value of this type.
 <tr><td><code>editable</code></td><td>0</td><td></td></tr>
 <tr><td><code>cannoteditable</code></td><td>1</td><td></td></tr>
 <tr><td><code>multiselected</code></td><td>2</td><td></td></tr>
+<tr><td><code>withoutbutton</code></td><td>3</td><td></td></tr>
 </table>
          */
         public static final int mode=0x7f010009;
@@ -108,35 +109,36 @@ containing a value of this type.
         public static final int ic_pull_down_button=0x7f020003;
     }
     public static final class id {
-        public static final int btnCamera=0x7f04000f;
-        public static final int btnPullDownEditText=0x7f040010;
-        public static final int btnRunningTask=0x7f04000e;
-        public static final int btnSmartListView=0x7f040011;
-        public static final int btn_shutter=0x7f040008;
-        public static final int button1=0x7f04000a;
-        public static final int button3=0x7f040009;
-        public static final int button4=0x7f04000b;
-        public static final int button5=0x7f04000c;
-        public static final int button6=0x7f04000d;
-        public static final int camera_surfaceview=0x7f040007;
+        public static final int btnCamera=0x7f040010;
+        public static final int btnPullDownEditText=0x7f040011;
+        public static final int btnRunningTask=0x7f04000f;
+        public static final int btnSmartListView=0x7f040012;
+        public static final int btn_shutter=0x7f040009;
+        public static final int button1=0x7f04000b;
+        public static final int button3=0x7f04000a;
+        public static final int button4=0x7f04000c;
+        public static final int button5=0x7f04000d;
+        public static final int button6=0x7f04000e;
+        public static final int camera_surfaceview=0x7f040008;
         public static final int cannoteditable=0x7f040001;
         public static final int editable=0x7f040000;
-        public static final int edt=0x7f040018;
-        public static final int footer=0x7f04001c;
-        public static final int header=0x7f04001a;
-        public static final int iv=0x7f040019;
-        public static final int lv=0x7f04001b;
-        public static final int lvPopWindow=0x7f040016;
-        public static final int lvRunningTask=0x7f040014;
-        public static final int multiEdt=0x7f040012;
+        public static final int edt=0x7f040019;
+        public static final int footer=0x7f04001d;
+        public static final int header=0x7f04001b;
+        public static final int iv=0x7f04001a;
+        public static final int lv=0x7f04001c;
+        public static final int lvPopWindow=0x7f040017;
+        public static final int lvRunningTask=0x7f040015;
+        public static final int multiEdt=0x7f040013;
         public static final int multiselected=0x7f040002;
-        public static final int smartList=0x7f040015;
-        public static final int spMethod=0x7f040013;
-        public static final int stateAlwaysHidden=0x7f040006;
-        public static final int stateHidden=0x7f040005;
-        public static final int stateUnchanged=0x7f040004;
-        public static final int stateUnspecified=0x7f040003;
-        public static final int tvLabel=0x7f040017;
+        public static final int smartList=0x7f040016;
+        public static final int spMethod=0x7f040014;
+        public static final int stateAlwaysHidden=0x7f040007;
+        public static final int stateHidden=0x7f040006;
+        public static final int stateUnchanged=0x7f040005;
+        public static final int stateUnspecified=0x7f040004;
+        public static final int tvLabel=0x7f040018;
+        public static final int withoutbutton=0x7f040003;
     }
     public static final class layout {
         public static final int activity_camera=0x7f030000;
@@ -323,6 +325,7 @@ containing a value of this type.
 <tr><td><code>editable</code></td><td>0</td><td></td></tr>
 <tr><td><code>cannoteditable</code></td><td>1</td><td></td></tr>
 <tr><td><code>multiselected</code></td><td>2</td><td></td></tr>
+<tr><td><code>withoutbutton</code></td><td>3</td><td></td></tr>
 </table>
           @attr name com.cj.mywidget:mode
         */

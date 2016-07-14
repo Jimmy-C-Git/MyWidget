@@ -21,11 +21,8 @@ public class MainActivity extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        
     }
-    private void saveMobileInfo(){
-    	Camera.
-    }
+   
     private void initView(){
     	btnPullDownEditText=(Button)findViewById(R.id.btnPullDownEditText);
     	btnSmartListView=(Button)findViewById(R.id.btnSmartListView);

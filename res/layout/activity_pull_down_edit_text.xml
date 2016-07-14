@@ -1,5 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:terry="http://schemas.android.com/apk/res/com.cj.mywidget"
+    xmlns:terry="http://schemas.android.com/apk/lib/com.cj.mywidget"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         terry:LabelText="adfhlasd:"
         terry:LabelWidth="100dp"
-        terry:mode="cannoteditable"/>
+        terry:mode="withoutbutton"/>
 
     <Button
         android:id="@+id/button1"
