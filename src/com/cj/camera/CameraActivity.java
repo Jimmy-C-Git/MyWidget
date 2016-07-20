@@ -73,17 +73,40 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
     
     @Override  
     public void cameraHasOpened(final int previewWidth,final int previewHeight) {  
-        SurfaceHolder holder = surfaceView.getSurfaceHolder();  
-        CameraInterface.getInstance(this).doStartPreview(holder, previewRate);
+        final SurfaceHolder holder = surfaceView.getSurfaceHolder();  
+        
         
         handler.post(new Runnable() {
 			
 			@Override
 			public void run() {
 				LayoutParams params = surfaceView.getLayoutParams();
-		        params.width =previewHeight ;  
-		        params.height = previewWidth;  
+				Point p=DisplayUtil.getScreenMetrics(CameraActivity.this);
+				int screenWidth=p.x;
+				int screenHeight=p.y;
+				float rate=(float)previewWidth/previewHeight;
+				float screenRate=(float)screenHeight/screenWidth;
+				
+				/*if(rate>1){
+					screenRate=screenHeight/screenWidth;
+				}else {
+					screenRate=screenHeight/screenWidth;
+				}*/
+				if(rate>screenRate){
+					params.width =(int) (screenHeight/rate) ;  
+			        params.height =screenHeight ; 
+					//params.width =screenWidth ;  
+			        //params.height = (int) (screenWidth/rate); 
+				}else {
+					/*params.width =(int) (screenHeight*rate) ;  
+			        params.height =screenHeight ;*/ 
+			        params.width =screenWidth ;  
+			        params.height = (int) (screenWidth*rate); 
+				}
+					 
+		        
 		        surfaceView.setLayoutParams(params);
+		        CameraInterface.getInstance(CameraActivity.this).doStartPreview(holder, previewRate);
 			}
 		});
     }  

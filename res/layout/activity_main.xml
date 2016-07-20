@@ -29,19 +29,19 @@
         android:text="Button" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/btnGL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/button5"
-        android:text="Button" />
+        android:text="btnGL" />
 
     <Button
         android:id="@+id/btnRunningTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/button6"
+        android:layout_below="@+id/btnGL"
         android:text="btnRunningTask" />
 
     <Button

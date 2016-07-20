@@ -1,6 +1,7 @@
 package com.cj.mywidget;
 
 import com.cj.camera.CameraActivity;
+import com.cj.glsurface.GLSurfaceActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,7 +17,8 @@ import android.widget.Button;
 
 public class MainActivity extends Activity implements OnClickListener{
 	Button btnPullDownEditText,btnSmartListView,btnCamera,btnRunningTask;
-    @Override
+	private Button btnGL;
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -28,7 +30,8 @@ public class MainActivity extends Activity implements OnClickListener{
     	btnSmartListView=(Button)findViewById(R.id.btnSmartListView);
     	btnCamera=(Button)findViewById(R.id.btnCamera);
     	btnRunningTask=(Button)findViewById(R.id.btnRunningTask);
-    	
+    	btnGL=(Button)findViewById(R.id.btnGL);
+    	btnGL.setOnClickListener(this);
     	btnSmartListView.setOnClickListener(this);
     	btnPullDownEditText.setOnClickListener(this);
     	btnCamera.setOnClickListener(this);
@@ -53,6 +56,10 @@ public class MainActivity extends Activity implements OnClickListener{
 			break;
 		case R.id.btnRunningTask:
 			i=new Intent(this,RunningTaskActivity.class);
+			startActivity(i);
+			break;
+		case R.id.btnGL:
+			i=new Intent(this,GLSurfaceActivity.class);
 			startActivity(i);
 			break;
 		}

@@ -16,6 +16,6 @@ public class PullDownEditTextActivity extends Activity {
 		edit=(MultiEditText)findViewById(R.id.editable);
 		edit.init(new String[]{"1","2","3","4","5","6","7","8","9"});
 		canedit=(MultiEditText)findViewById(R.id.cannoteditable);
-		//canedit.init(new String[]{"1","2","3","4","5","6","7","8","9"});
+		canedit.init(new String[]{"1","2","3","4","5","6","7","8","9"});
 	}
 }

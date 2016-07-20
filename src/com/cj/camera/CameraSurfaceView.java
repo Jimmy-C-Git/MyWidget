@@ -13,6 +13,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     CameraInterface mCameraInterface;  
     Context mContext;  
     SurfaceHolder mSurfaceHolder;  
+    
     public CameraSurfaceView(Context context, AttributeSet attrs) {  
         super(context, attrs);  
         // TODO Auto-generated constructor stub  

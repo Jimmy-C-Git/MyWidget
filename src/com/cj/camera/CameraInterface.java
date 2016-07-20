@@ -11,6 +11,8 @@ import java.util.List;
 
 
 
+
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,6 +25,7 @@ import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;  
 import android.hardware.Camera.Size;  
 import android.util.Log;  
+import android.view.Surface;
 import android.view.SurfaceHolder;  
 import android.view.SurfaceView;
 import android.view.ViewGroup.LayoutParams;
@@ -86,8 +89,35 @@ public class CameraInterface {
     		mCameraShared=mContext.getSharedPreferences("camera",Activity.MODE_PRIVATE);
     	return mCamera.new Size(mCameraShared.getInt("PreviewSizeWidth", 0),mCameraShared.getInt("PreviewSizeHeight", 0));
     }
+    
+   /* public static void setCameraDisplayOrientation(Activity activity,
+            int cameraId, android.hardware.Camera camera) {
+        android.hardware.Camera.CameraInfo info =
+                new android.hardware.Camera.CameraInfo();
+        android.hardware.Camera.getCameraInfo(cameraId, info);
+        int rotation = activity.getWindowManager().getDefaultDisplay()
+                .getRotation();
+        int degrees = 0;
+        switch (rotation) {
+            case Surface.ROTATION_0: degrees = 0; break;
+            case Surface.ROTATION_90: degrees = 90; break;
+            case Surface.ROTATION_180: degrees = 180; break;
+            case Surface.ROTATION_270: degrees = 270; break;
+        }
+
+        int result;
+        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            result = (info.orientation + degrees) % 360;
+            result = (360 - result) % 360;  // compensate the mirror
+        } else {  // back-facing
+            result = (info.orientation - degrees + 360) % 360;
+        }
+        camera.setDisplayOrientation(result);
+    }*/
     private void initCameraParams(){
     	if(mCamera != null){
+    		mCamera.enableShutterSound(false);
+    		
         	mParams = mCamera.getParameters();
         	mCameraShared=mContext.getSharedPreferences("camera",Activity.MODE_PRIVATE);
         	if(mCameraShared.getBoolean("isFirstUseCamera", true)){
@@ -186,23 +216,34 @@ public class CameraInterface {
     PictureCallback mJpegPictureCallback = new PictureCallback()   
     //对jpeg图像数据的回调,最重要的一个回调  
     {  
-        public void onPictureTaken(byte[] data, Camera camera) {  
+        public void onPictureTaken(final byte[] data, Camera camera) {  
             // TODO Auto-generated method stub  
             Log.i(TAG, "myJpegCallback:onPictureTaken...");  
-            Bitmap b = null;  
-            if(null != data){  
-                b = BitmapFactory.decodeByteArray(data, 0, data.length);//data是字节数据，将其解析成位图  
-                mCamera.stopPreview();  
-                isPreviewing = false;  
-            }  
-            //保存图片到sdcard  
-            if(null != b)  
-            {  
-                //设置FOCUS_MODE_CONTINUOUS_VIDEO)之后，myParam.set("rotation", 90)失效。  
-                //图片竟然不能旋转了，故这里要旋转下  
-                Bitmap rotaBitmap = ImageUtil.getRotateBitmap(b, 90.0f);  
-                FileUtil.saveBitmap(rotaBitmap);  
-            }  
+            mCamera.stopPreview();  
+            isPreviewing = false;  
+            new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					Bitmap b = null;  
+		            if(null != data){  
+		                b = BitmapFactory.decodeByteArray(data, 0, data.length);//data是字节数据，将其解析成位图  
+		                
+		                if(null != b)  
+		                {  
+		                	
+		                    //设置FOCUS_MODE_CONTINUOUS_VIDEO)之后，myParam.set("rotation", 90)失效。  
+		                    //图片竟然不能旋转了，故这里要旋转下  
+		                	Bitmap rotaBitmap = ImageUtil.getRotateBitmap(b, 90.0f);  
+		                    FileUtil.saveBitmap(rotaBitmap);
+		                	//FileUtil.saveBitmap(b);
+		                }  
+		            } 
+				}
+			}).start();
+            
+            
             //再次进入预览  
             mCamera.startPreview();  
             isPreviewing = true;  
