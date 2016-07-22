@@ -18,6 +18,6 @@ public class GLSurfaceActivity extends Activity {
 		setContentView(R.layout.activity_glsurface);
 		FrameLayout container=(FrameLayout) findViewById(R.id.container);
 		
-		container.addView(new GLSurface(this));
+		container.addView(new MyGLSurfaceView(this));
 	}
 }
