@@ -25,7 +25,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
 		super(context);
 		mRenderer=new MyRender(context);
 		setRenderer(mRenderer);
-		
 		//setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 		//setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 		
@@ -55,10 +54,11 @@ public class MyGLSurfaceView extends GLSurfaceView {
 	            if (x < getWidth() / 2) {
 	              dy = dy * -1 ;
 	            }
-
-	            mRenderer.setAngle(
+	            mRenderer.transX=dx;
+	            mRenderer.transY=dy;
+	           /* mRenderer.setAngle(
 	                    mRenderer.getAngle() +
-	                    ((dx + dy) * TOUCH_SCALE_FACTOR));
+	                    ((dx + dy) * TOUCH_SCALE_FACTOR));*/
 	            requestRender();
 	    }
 

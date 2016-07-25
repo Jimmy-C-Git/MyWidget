@@ -42,43 +42,55 @@ public class Mesh {
 	}
 	public void draw(GL10 gl,int mode) {
 		// Counter-clockwise winding.
-				gl.glFrontFace(GL10.GL_CCW);
-				// Enable face culling.
-				gl.glEnable(GL10.GL_CULL_FACE);
-				// What faces to remove with the face culling.
-				gl.glCullFace(GL10.GL_BACK);
-				// Enabled the vertices buffer for writing and
-				// to be used during
-				// rendering.
-				gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-				// Specifies the location and data format
-				// of an array of vertex
-				// coordinates to use when rendering.
-				gl.glVertexPointer(3, GL10.GL_FLOAT, 0, verticesBuffer);
-				// Set flat color
-				gl.glColor4f(rgba[0], rgba[1], rgba[2], rgba[3]);
-				// Smooth color
-				if (colorBuffer != null) {
-					// Enable the color array buffer to be
-					// used during rendering.
-					gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
-					gl.glColorPointer(4, GL10.GL_FLOAT, 0, colorBuffer);
-					
-				}
+		gl.glFrontFace(GL10.GL_CCW);
+		// Enable face culling.
+		gl.glEnable(GL10.GL_CULL_FACE);
+		// What faces to remove with the face culling.
+		gl.glCullFace(GL10.GL_FRONT);
+		
+		
+		// Enabled the vertices buffer for writing and
+		// to be used during
+		// rendering.
+		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		// Specifies the location and data format
+		// of an array of vertex
+		// coordinates to use when rendering.
+		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, verticesBuffer);
+		// Set flat color
+		gl.glColor4f(rgba[0], rgba[1], rgba[2], rgba[3]);
+		// Smooth color
+		if (colorBuffer != null) {
+			// Enable the color array buffer to be
+			// used during rendering.
+			gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
+			gl.glColorPointer(4, GL10.GL_FLOAT, 0, colorBuffer);
+			
 
-				gl.glTranslatef(x, y, z);
-				gl.glRotatef(rx, 1, 0, 0);
-				gl.glRotatef(ry, 0, 1, 0);
-				gl.glRotatef(rz, 0, 0, 1);
+		}
 
-				// Point out the where the color buffer is.
-				gl.glDrawElements(mode, numOfIndices,
-						GL10.GL_UNSIGNED_SHORT, indicesBuffer);
-				
-				// Disable the vertices buffer.
-				gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
-				// Disable face culling.
-				gl.glDisable(GL10.GL_CULL_FACE);
+		gl.glTranslatef(x, y, z);
+		gl.glRotatef(rx, 1, 0, 0);
+		gl.glRotatef(ry, 0, 1, 0);
+		gl.glRotatef(rz, 0, 0, 1);
+
+		// Point out the where the color buffer is.
+		if(indicesBuffer!=null){
+			gl.glDrawElements(mode, numOfIndices, GL10.GL_UNSIGNED_SHORT,
+					indicesBuffer);
+		}
+		else {
+			gl.glDrawArrays(mode, 0, 4);
+		}
+		
+		// Disable the vertices buffer.
+		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+		if(colorBuffer!=null){
+			gl.glDisableClientState(GL10.GL_COLOR_ARRAY);
+		}
+		
+		// Disable face culling.
+		//gl.glDisable(GL10.GL_CULL_FACE);
 	}
 	protected void setVertices(float[] vertices) {
 		// a float is 4 bytes, therefore
