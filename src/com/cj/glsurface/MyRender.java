@@ -29,65 +29,89 @@ public class MyRender implements Renderer {
 	private Context context;
 	private final float[] mProjectionMatrix = new float[16];
 	public float transX=0,transY=0,transZ=0;
-	
+	public float eyeX=0,eyeY=0,eyeZ=50;
+	public float theta=0,alfa=0;
 	public volatile float mAngle=1;
 	
 	public MyRender(Context main) {
 		this.context = main;
 	}
+	private Mesh coordinates =new Mesh();
+	private Sphere sun,moon,earth;
+	private int angle=0;
 
-	public void initScene(GL10 gl) {
-		float[] amb = { 1.0f, 1.0f, 1.0f, 1.0f, };
-		float[] diff = { 1.0f, 1.0f, 1.0f, 1.0f, };
-		float[] spec = { 1.0f, 1.0f, 1.0f, 1.0f, };
-		float[] pos = { 0.0f, 0.0f, 5.0f, 0.0f, };
-		float[] spot_dir = { 0.0f, -1.0f, 0.0f, };
-		gl.glEnable(GL10.GL_DEPTH_TEST);
-		gl.glEnable(GL10.GL_CULL_FACE);
+	public void initLight(GL10 gl) {
+		 float[] amb = { 0.0f, 0.0f, 0.0f, 1.0f, };
+		 float[] diff = { 1.0f, 1.0f, 1.0f, 1.0f, };
+		 float[] spec = { 1.0f, 1.0f, 1.0f, 1.0f, };
+		 float[] pos = { .0f, .0f, -50.0f, 0.0f, };
+		 
+		
+		 
+		 gl.glEnable(GL10.GL_DEPTH_TEST);
+		 gl.glEnable(GL10.GL_CULL_FACE);
 
-		gl.glEnable(GL10.GL_LIGHTING);
-		gl.glEnable(GL10.GL_LIGHT0);
-		ByteBuffer abb = ByteBuffer.allocateDirect(amb.length * 4);
-		abb.order(ByteOrder.nativeOrder());
-		FloatBuffer ambBuf = abb.asFloatBuffer();
-		ambBuf.put(amb);
-		ambBuf.position(0);
+		 gl.glEnable(GL10.GL_LIGHTING);
+		 gl.glEnable(GL10.GL_LIGHT0);
+		 ByteBuffer abb
+		 = ByteBuffer.allocateDirect(amb.length*4);
+		 abb.order(ByteOrder.nativeOrder());
+		 FloatBuffer ambBuf = abb.asFloatBuffer();
+		 ambBuf.put(amb);
+		 ambBuf.position(0);
 
-		ByteBuffer dbb = ByteBuffer.allocateDirect(diff.length * 4);
-		dbb.order(ByteOrder.nativeOrder());
-		FloatBuffer diffBuf = dbb.asFloatBuffer();
-		diffBuf.put(diff);
-		diffBuf.position(0);
+		 ByteBuffer dbb
+		 = ByteBuffer.allocateDirect(diff.length*4);
+		 dbb.order(ByteOrder.nativeOrder());
+		 FloatBuffer diffBuf = dbb.asFloatBuffer();
+		 diffBuf.put(diff);
+		 diffBuf.position(0);
 
-		ByteBuffer sbb = ByteBuffer.allocateDirect(spec.length * 4);
-		sbb.order(ByteOrder.nativeOrder());
-		FloatBuffer specBuf = sbb.asFloatBuffer();
-		specBuf.put(spec);
-		specBuf.position(0);
+		 ByteBuffer sbb
+		 = ByteBuffer.allocateDirect(spec.length*4);
+		 sbb.order(ByteOrder.nativeOrder());
+		 FloatBuffer specBuf = sbb.asFloatBuffer();
+		 specBuf.put(spec);
+		 specBuf.position(0);
 
-		ByteBuffer pbb = ByteBuffer.allocateDirect(pos.length * 4);
-		pbb.order(ByteOrder.nativeOrder());
-		FloatBuffer posBuf = pbb.asFloatBuffer();
-		posBuf.put(pos);
-		posBuf.position(0);
+		 ByteBuffer pbb
+		 = ByteBuffer.allocateDirect(pos.length*4);
+		 pbb.order(ByteOrder.nativeOrder());
+		 FloatBuffer posBuf = pbb.asFloatBuffer();
+		 posBuf.put(pos);
+		 posBuf.position(0);
 
-		ByteBuffer spbb = ByteBuffer.allocateDirect(spot_dir.length * 4);
-		spbb.order(ByteOrder.nativeOrder());
-		FloatBuffer spot_dirBuf = spbb.asFloatBuffer();
-		spot_dirBuf.put(spot_dir);
-		spot_dirBuf.position(0);
-
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, ambBuf);
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, diffBuf);
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, specBuf);
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, posBuf);
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPOT_DIRECTION, spot_dirBuf);
-		gl.glLightf(GL10.GL_LIGHT0, GL10.GL_SPOT_EXPONENT, 0.0f);
-		gl.glLightf(GL10.GL_LIGHT0, GL10.GL_SPOT_CUTOFF, 45.0f);
-
-		gl.glLoadIdentity();
 		
 
+
+		 gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, ambBuf);
+		 gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, diffBuf);
+		 gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, specBuf);
+		 gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, posBuf);
+		 gl.glLightf(GL10.GL_LIGHT0, GL10.GL_SPOT_EXPONENT, 0.0f);
+		 gl.glLightf(GL10.GL_LIGHT0, GL10.GL_SPOT_CUTOFF, 45.0f);
+		 
+		 float sun_mat_ambient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+	     float sun_mat_diffuse[] = {0.0f, 0.0f, 0.0f, 1.0f};
+	     float sun_mat_specular[] = {0.0f, 0.0f, 0.0f, 1.0f};
+	     float sun_mat_emission[] = {0.5f, 0.0f, 0.0f, 1.0f};
+	     float sun_mat_shininess = 0.0f;
+	     gl.glMaterialfv(GL10.GL_FRONT, GL10.GL_AMBIENT,getBuffer(sun_mat_ambient, sun_mat_ambient.length));
+	     gl.glMaterialfv(GL10.GL_FRONT, GL10.GL_DIFFUSE,getBuffer(sun_mat_diffuse,sun_mat_diffuse.length));
+	     gl.glMaterialfv(GL10.GL_FRONT, GL10.GL_SPECULAR,getBuffer(sun_mat_specular,sun_mat_specular.length));
+	     gl.glMaterialfv(GL10.GL_FRONT, GL10.GL_EMISSION,getBuffer(sun_mat_emission,sun_mat_emission.length));
+	     gl.glMaterialf(GL10.GL_FRONT, GL10.GL_SHININESS,sun_mat_shininess);
+	    
+		
+
+	}
+	FloatBuffer getBuffer(float[] f,int length){
+		 ByteBuffer spbb= ByteBuffer.allocateDirect(length*4);
+		 spbb.order(ByteOrder.nativeOrder());
+		 FloatBuffer spot_dirBuf = spbb.asFloatBuffer();
+		 spot_dirBuf.put(f);
+		 spot_dirBuf.position(0);
+		 return spot_dirBuf;
 	}
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -105,8 +129,16 @@ public class MyRender implements Renderer {
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT,
 				GL10.GL_NICEST);
 		
-		initScene(gl);
+		
 		mSquare=new Square();
+		sun=new Sphere(2);
+		earth=new Sphere(1);
+		moon=new Sphere(0.5f);
+		
+		/*coordinates.setColor(1, 1, 1, 1);
+		coordinates.setVertices(new float[]{0,0,0, 10,0,0, 0,10,0, 0,0,10,2,0,0, 0,2,0, 0,0,2});
+		coordinates.setIndices(new short[]{4,1,5,2,6,3});*/
+		
 	}
 
 	@Override
@@ -127,27 +159,53 @@ public class MyRender implements Renderer {
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		// Reset the modelview matrix
 		gl.glLoadIdentity();
-		gl.glTranslatef(0, 0, -10);
-		
+		initLight(gl);
 	}
 
-	
+	private void drawCoordinates(GL10 gl){
+		coordinates.setColor(1, 0, 0, 1);
+		coordinates.setVertices(new float[]{2,0,0, 10,0,0});
+		coordinates.setIndices(new short[]{0,1});
+		coordinates.draw(gl,GL10.GL_LINES);
+		coordinates.setColor(0, 1, 0, 1);
+		coordinates.setVertices(new float[]{0,2,0, 0,10,0});
+		coordinates.setIndices(new short[]{0,1});
+		coordinates.draw(gl,GL10.GL_LINES);
+		coordinates.setColor(0, 0, 1, 1);
+		coordinates.setVertices(new float[]{0,0,2, 0,0,10});
+		coordinates.setIndices(new short[]{0,1});
+		coordinates.draw(gl,GL10.GL_LINES);
+	}
 	public void onDrawFrame(GL10 gl) {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT|GL10.GL_DEPTH_BUFFER_BIT);
-
-		gl.glRotatef(mAngle,1, 1, 0);
-		//gl.glTranslatef(transX, transY, transZ);
-		//gl.glTranslatef(0, 0, -1);
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		gl.glLoadIdentity();
 		
-		mSquare.draw(gl,GL10.GL_TRIANGLES);
+		//gl.glTranslatef(transX, -transY, transZ);
+		float eyeX=(float) (50*Math.cos(alfa)*Math.sin(theta));
+		float eyeY= (float) (50*Math.sin(alfa));
+		float eyeZ=(float) (50*Math.cos(alfa)*Math.cos(theta));
 		
-	//	GLU.gluLookAt(gl, 0.0f, 0f, 20.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-		//angle++;
+		GLU.gluLookAt(gl,eyeX ,eyeY,eyeZ , 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+		gl.glPushMatrix();
+		drawCoordinates(gl);
+		
+		gl.glColor4f(1, 0, 0, 1);
+		gl.glRotatef(angle, 0, 0, 1);
+		sun.draw(gl);
+		gl.glPopMatrix();
+		
+		gl.glPushMatrix();
+		gl.glRotatef(angle, 0, 0, 1);
+		gl.glTranslatef(8, 0, 0);
+		gl.glColor4f(0, 0, 1, 1);
+		earth.draw(gl);
+		
+		gl.glRotatef(angle*1.5f, 0, 0, 1);
+		gl.glTranslatef(2, 0, 0);
+		gl.glColor4f(1,1,1,1);
+		moon.draw(gl);
+		gl.glPopMatrix();
+		angle++;
 
 	}
 	
