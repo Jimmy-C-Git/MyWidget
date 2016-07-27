@@ -25,7 +25,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
 		super(context);
 		mRenderer=new MyRender(context);
 		setRenderer(mRenderer);
-		//setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+		setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 		//setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 		
 		

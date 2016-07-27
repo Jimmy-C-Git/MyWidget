@@ -25,13 +25,43 @@ public class Sphere extends Mesh{
 	public Sphere(float radious){
 		this(0f,0f,0f,radious);
 	}
+	public void setMaterial(GL10 gl){
+		float[] mat_amb = { 0.2f * 0.4f, 0.2f * 0.4f, 0.2f * 1.0f, 1.0f, };
+		float[] mat_diff = { 0.4f, 0.4f, 1.0f, 1.0f, };
+		float[] mat_spec = { 1.0f, 1.0f, 1.0f, 1.0f, };
+
+		ByteBuffer mabb = ByteBuffer.allocateDirect(mat_amb.length * 4);
+		mabb.order(ByteOrder.nativeOrder());
+		FloatBuffer mat_ambBuf = mabb.asFloatBuffer();
+		mat_ambBuf.put(mat_amb);
+		mat_ambBuf.position(0);
+
+		ByteBuffer mdbb = ByteBuffer.allocateDirect(mat_diff.length * 4);
+		mdbb.order(ByteOrder.nativeOrder());
+		FloatBuffer mat_diffBuf = mdbb.asFloatBuffer();
+		mat_diffBuf.put(mat_diff);
+		mat_diffBuf.position(0);
+
+		ByteBuffer msbb = ByteBuffer.allocateDirect(mat_spec.length * 4);
+		msbb.order(ByteOrder.nativeOrder());
+		FloatBuffer mat_specBuf = msbb.asFloatBuffer();
+		mat_specBuf.put(mat_spec);
+		mat_specBuf.position(0);
+
+		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_AMBIENT, mat_ambBuf);
+		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, mat_diffBuf);
+		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, mat_specBuf);
+		gl.glMaterialf(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, 64.0f);
+
+	}
 	@Override
 	public void draw(GL10 gl) {
+		setMaterial(gl);
 		float theta, pai;
 		float co, si;
 		float r1, r2;
 		float h1, h2;
-		float step = 15.0f;
+		float step = 5.0f;
 		float[][] v = new float[32][3];
 		ByteBuffer vbb;
 		FloatBuffer vBuf;
