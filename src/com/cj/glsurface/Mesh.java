@@ -18,7 +18,7 @@ public class Mesh {
 	private int numOfIndices = -1;
 
 	// Flat Color
-	private float[] rgba = new float[] { 1.0f, 1.0f, 1.0f, 1.0f };
+	protected float[] rgba = new float[] { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	// Smooth Colors
 	private FloatBuffer colorBuffer = null;

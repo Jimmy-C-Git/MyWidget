@@ -56,12 +56,17 @@ public class Sphere extends Mesh{
 	}
 	@Override
 	public void draw(GL10 gl) {
-		setMaterial(gl);
+		//setMaterial(gl);
+		gl.glFrontFace(GL10.GL_CCW);
+		// Enable face culling.
+		gl.glEnable(GL10.GL_CULL_FACE);
+		// What faces to remove with the face culling.
+		gl.glCullFace(GL10.GL_BACK);
 		float theta, pai;
 		float co, si;
 		float r1, r2;
 		float h1, h2;
-		float step = 5.0f;
+		float step = 10.0f;
 		float[][] v = new float[32][3];
 		ByteBuffer vbb;
 		FloatBuffer vBuf;

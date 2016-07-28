@@ -25,7 +25,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
 		super(context);
 		mRenderer=new MyRender(context);
 		setRenderer(mRenderer);
-		setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+		//setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 		//setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 		
 		
@@ -44,8 +44,8 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
 	            float dx = x - mPreviousX;
 	            float dy = y - mPreviousY;
-	            /*mRenderer.transX+=dx/10;
-	            mRenderer.transY+=dy/10;*/
+	            mRenderer.transX+=dx/10;
+	            mRenderer.transY+=dy/10;
 	            
 	            float dAlfa=(float) ((dy*TOUCH_SCALE_FACTOR)*Math.PI);
 	            float dTheta=(float) (-dx*TOUCH_SCALE_FACTOR*Math.PI);
@@ -62,9 +62,9 @@ public class MyGLSurfaceView extends GLSurfaceView {
 	              dy = dy * -1 ;
 	            }
 	            
-	           /* mRenderer.setAngle(
+	            mRenderer.setAngle(
 	                    mRenderer.getAngle() +
-	                    ((dx + dy) * TOUCH_SCALE_FACTOR));*/
+	                    ((dx + dy) * TOUCH_SCALE_FACTOR));
 	            requestRender();
 	    }
 

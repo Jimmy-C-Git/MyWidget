@@ -29,8 +29,8 @@ public class MyRender implements Renderer {
 	private Context context;
 	private final float[] mProjectionMatrix = new float[16];
 	public float transX=0,transY=0,transZ=0;
-	public float eyeX=50,eyeY=50,eyeZ=50;
-	public float theta=0,alfa=0;
+	public float eyeX=0,eyeY=0,eyeZ=50;
+	public float theta=(float) (Math.PI/4),alfa=(float) (Math.PI/4);
 	public volatile float mAngle=1;
 	
 	public MyRender(Context main) {
@@ -39,16 +39,16 @@ public class MyRender implements Renderer {
 	private Mesh coordinates =new Mesh();
 	private Sphere sun,moon,earth;
 	private int angle=0;
-
+	float[] pos = { 0.0f, 0.0f,10.0f, 1.0f, };
 	public void initLight(GL10 gl) {
 		float[] amb = { 1.0f, 1.0f, 1.0f, 1.0f, };
 		float[] diff = { 1.0f, 1.0f, 1.0f, 1.0f, };
 		float[] spec = { 1.0f, 1.0f, 1.0f, 1.0f, };
-		float[] pos = { 10.0f, 10.0f,10.0f, 0.0f, };
+		
 
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glEnable(GL10.GL_CULL_FACE);
-
+		
 		gl.glEnable(GL10.GL_LIGHTING);
 		gl.glEnable(GL10.GL_LIGHT0);
 		ByteBuffer abb = ByteBuffer.allocateDirect(amb.length * 4);
@@ -78,7 +78,7 @@ public class MyRender implements Renderer {
 		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, ambBuf);
 		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, diffBuf);
 		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, specBuf);
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, posBuf);
+		//gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, posBuf);
 		//gl.glLightf(GL10.GL_LIGHT0, GL10.GL_SPOT_EXPONENT, 0.0f);
 		//gl.glLightf(GL10.GL_LIGHT0, GL10.GL_SPOT_CUTOFF, 45.0f);
 
@@ -152,40 +152,59 @@ public class MyRender implements Renderer {
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		// Reset the modelview matrix
 		gl.glLoadIdentity();
-		
 		initLight(gl);
-		gl.glLoadIdentity();
-		GLU.gluLookAt(gl,eyeX ,eyeY,eyeZ , 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+		
+		
+		/*gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, pos,0);getBuffer(pos, pos.length)*/
 	}
 
 	private void drawCoordinates(GL10 gl){
 		coordinates.setColor(1, 0, 0, 1);
-		coordinates.setVertices(new float[]{2,0,0, 10,0,0});
+		float ver[]=new float[]{0,0,0, 10,0,0};
+		for(int i=0;i<=10;i++)
+			for(int j=0;j<=10;j++)
+				for(int k=0;k<=10;k++){
+			ver[3]=i;
+			ver[4]=j;
+			ver[5]=k;
+			if(i==10||j==10||k==10){
+				coordinates.setVertices(ver);
+				coordinates.setIndices(new short[]{0,1});
+				coordinates.draw(gl,GL10.GL_LINES);
+			}
+			
+		}
+		/*coordinates.setColor(1, 0, 0, 1);
+		coordinates.setVertices(new float[]{0,0,0, 10,0,0});
 		coordinates.setIndices(new short[]{0,1});
 		coordinates.draw(gl,GL10.GL_LINES);
 		coordinates.setColor(0, 1, 0, 1);
-		coordinates.setVertices(new float[]{0,2,0, 0,10,0});
+		coordinates.setVertices(new float[]{0,0,0, 0,10,0});
 		coordinates.setIndices(new short[]{0,1});
 		coordinates.draw(gl,GL10.GL_LINES);
 		coordinates.setColor(0, 0, 1, 1);
-		coordinates.setVertices(new float[]{0,0,2, 0,0,10});
+		coordinates.setVertices(new float[]{0,0,0, 0,0,10});
 		coordinates.setIndices(new short[]{0,1});
-		coordinates.draw(gl,GL10.GL_LINES);
+		coordinates.draw(gl,GL10.GL_LINES);*/
 	}
 	public void onDrawFrame(GL10 gl) {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT|GL10.GL_DEPTH_BUFFER_BIT);
-		sun.draw(gl);
-		/*eyeX=(float) (50*Math.cos(alfa)*Math.sin(theta));
+		
+		gl.glLoadIdentity();
+		
+		eyeX=(float) (50*Math.cos(alfa)*Math.sin(theta));
 		eyeY= (float) (50*Math.sin(alfa));
 		eyeZ=(float) (50*Math.cos(alfa)*Math.cos(theta));
-		gl.glClear(GL10.GL_COLOR_BUFFER_BIT|GL10.GL_DEPTH_BUFFER_BIT);
-		gl.glLoadIdentity();
-		gl.glPushMatrix();
-		GLU.gluLookAt(gl,eyeX ,eyeY,eyeZ , 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-		//initLight(gl);
-		//gl.glTranslatef(transX, -transY, transZ);
-		drawCoordinates(gl);
+		GLU.gluLookAt(gl,eyeX,eyeY,eyeZ , 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, getBuffer(pos, pos.length));
 		
+		gl.glPushMatrix();
+		gl.glTranslatef(pos[0], pos[1], pos[2]);
+		gl.glRotatef(180f, 1, 1, (float) (1-Math.sqrt(3)));
+		drawCoordinates(gl);
+		gl.glPopMatrix();
+		
+		gl.glPushMatrix();
 		gl.glColor4f(1, 0, 0, 1);
 		gl.glRotatef(angle, 0, 0, 1);
 		sun.draw(gl);
@@ -201,9 +220,7 @@ public class MyRender implements Renderer {
 		gl.glTranslatef(2, 0, 0);
 		gl.glColor4f(1,1,1,1);
 		moon.draw(gl);
-		gl.glPopMatrix();*/
-		
-		
+		gl.glPopMatrix();
 		
 		angle++;
 
